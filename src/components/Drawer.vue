@@ -7,12 +7,12 @@
         v-if="!totalPrice && !orderCreated"
         title="Cart is empty"
         description="Add at least one item to see your cart"
-        image-url="/package-icon.png"
+        image-url="package-icon.png"
       />
       <InfoBlock
         v-if="orderCreated"
         title="Order created"
-        image-url="/order-success-icon.png"
+        image-url="order-success-icon.png"
         description="Your order has been successfully created"
       />
     </div>
