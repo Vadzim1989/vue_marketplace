@@ -7,7 +7,7 @@
       viewBox="0 0 16 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      @click="toggleDrawer"
+      @click="$emit('closeDrawer')"
     >
       <path
         d="M1 7H14.7143"
@@ -27,8 +27,3 @@
     <h1 class="text-2xl font-bold">Cart</h1>
   </div>
 </template>
-
-<script setup>
-import { inject } from 'vue'
-const { toggleDrawer } = inject('cart')
-</script>

@@ -7,14 +7,17 @@
       :image-url="item.imageUrl"
       :title="item.title"
       :price="item.price"
-      @remove-from-cart="() => removeFromCart(item)"
+      @remove-from-cart="() => toggleCartItems(item)"
     />
   </div>
 </template>
 
 <script setup>
 import CartItem from './CartItem.vue'
-import { inject } from 'vue'
+import { cartData } from '@/stores/cart';
+import { storeToRefs } from 'pinia'
 
-const { cart, addToCart: removeFromCart } = inject('cart')
+const store = cartData();
+const { cart } = storeToRefs(store);
+const { toggleCartItems } = store;
 </script>

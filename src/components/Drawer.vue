@@ -1,7 +1,7 @@
 <template>
   <div class="fixed top-0 left-0 h-full w-full bg-black z-10 opacity-70"></div>
   <div class="bg-white w-96 h-full fixed right-0 top-0 z-20 p-8">
-    <DrawerHead />
+    <DrawerHead @close-drawer="$emit('closeDrawer')"/>
     <div v-if="!totalPrice || orderCreated" class="flex h-full items-center">
       <InfoBlock
         v-if="!totalPrice && !orderCreated"
@@ -42,19 +42,19 @@
 </template>
 
 <script setup>
-import { computed, ref, inject } from 'vue'
-import axios from 'axios'
+import { computed, ref } from 'vue'
+import { itemsService } from '@/services/items'
 import DrawerHead from './DrawerHead.vue'
 import CartItemList from './CartItemList.vue'
 import InfoBlock from './InfoBlock.vue'
 
 const props = defineProps({
   totalPrice: Number,
-  taxPrice: Number
+  taxPrice: Number,
+  cart: Object,
 })
 
-const { cart } = inject('cart')
-
+const { order } = itemsService();
 const isCreatingOrder = ref(false)
 const orderCreated = ref(false)
 
@@ -64,10 +64,10 @@ const buttonDisabled = computed(() =>
 const createOrder = async () => {
   try {
     isCreatingOrder.value = true
-    await axios.post('https://611323be906f6c89.mokky.dev/orders', {
+    await order({
       items: cart.value,
       totalPrice: props.totalPrice
-    })
+    });
     cart.value = []
   } catch (error) {
     console.log(error)

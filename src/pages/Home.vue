@@ -1,76 +1,29 @@
 <script setup>
 import { reactive, watch, ref, onMounted, inject } from 'vue'
-import axios from 'axios'
+import { getItemsData } from '@/stores/items'
+import { cartData } from '@/stores/cart'
+import { storeToRefs } from 'pinia'
 import debounce from 'lodash.debounce'
 import CardList from '@/components/CardList.vue'
 
-const { cart, addToCart } = inject('cart')
-const items = ref([])
-const filters = reactive({
-  sortBy: 'title',
-  searchQuery: ''
-})
-const getItems = async () => {
-  try {
-    const params = {
-      sortBy: filters.sortBy
-    }
-    if (filters.searchQuery) params.title = `*${filters.searchQuery}*`
-    const { data } = await axios.get('https://611323be906f6c89.mokky.dev/items', {
-      params
-    })
-    items.value = data.map((obj) => ({
-      ...obj,
-      isFavorite: false,
-      isAdded: false
-    }))
-  } catch (err) {
-    console.log(err)
-  }
+const store = getItemsData();
+const dataCart = cartData();
+const { items, filters } = storeToRefs(store);
+const { cart } = storeToRefs(dataCart);
+const { getItems, getFavorites, addToFavorite } = store;
+const { toggleCartItems } = dataCart; 
+
+const onChangeSelect = async (event) => {
+  filters.value.sortBy = event.target.value;
+  console.log(items.value);
+  await getItems();
+  console.log(items.value);
 }
-const getFavorites = async () => {
-  try {
-    const { data } = await axios.get('https://611323be906f6c89.mokky.dev/favorites')
-    items.value = items.value.map((item) => {
-      const favorite = data.find((favorite) => favorite.parentId === item.id)
-      if (!favorite) {
-        return item
-      }
-      return {
-        ...item,
-        isFavorite: true,
-        favoriteId: favorite.id
-      }
-    })
-  } catch (err) {
-    console.log(err)
-  }
+
+const onChangeSearchInput = (event) => {
+  filters.value.searchQuery = event.target.value
 }
-const onChangeSelect = (event) => {
-  filters.sortBy = event.target.value
-}
-const onChangeSearchInput = debounce((event) => {
-  filters.searchQuery = event.target.value
-}, 500)
-const addToFavorite = async (item) => {
-  try {
-    if (!item.isFavorite) {
-      const obj = {
-        parentId: item.id,
-        item
-      }
-      item.isFavorite = true
-      const { data } = await axios.post('https://611323be906f6c89.mokky.dev/favorites', obj)
-      item.favoriteId = data.id
-    } else {
-      item.isFavorite = false
-      await axios.delete(`https://611323be906f6c89.mokky.dev/favorites/${item.favoriteId}`)
-      delete item.favoriteId
-    }
-  } catch (err) {
-    console.log(err)
-  }
-}
+
 onMounted(async () => {
   cart.value = JSON.parse(localStorage.getItem('cart') || '[]')
   await getItems()
@@ -109,6 +62,6 @@ watch(cart, () => {
     </div>
   </div>
   <div class="mt-10">
-    <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="addToCart" />
+    <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="toggleCartItems"/>
   </div>
 </template>
