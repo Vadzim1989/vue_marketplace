@@ -93,6 +93,8 @@ const showModal = ref(false);
   position: absolute;
   top: 50%;
   left: 50%;
+  border-radius: 5%;
+  box-shadow: 0 0 20px 20px #fff;
   transform: translate(-50%, -50%);
   background-color: rgb(255, 255, 255);
   padding: 15px;
