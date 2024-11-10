@@ -24,11 +24,6 @@
           <div class="flex-1 border-b border-dashed"></div>
           <b>{{ totalPrice }}</b>
         </div>
-        <div class="flex gap-2">
-          <span>Tax 5%:</span>
-          <div class="flex-1 border-b border-dashed"></div>
-          <b>{{ taxPrice }}</b>
-        </div>
         <button
           :disabled="buttonDisabled"
           @click="createOrder"
@@ -50,7 +45,6 @@ import InfoBlock from './InfoBlock.vue'
 
 const props = defineProps({
   totalPrice: Number,
-  taxPrice: Number,
   cart: Object,
 })
 
