@@ -1,16 +1,16 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
+import { itemsService } from '@/services/items'
 import CardList from '@/components/CardList.vue'
 
 const orders = ref([])
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get('https://611323be906f6c89.mokky.dev/orders')
+    const { getOrders } = itemsService();
+    const { data } = await getOrders();
     // create favorite list
     orders.value = data.map(({ items }) => items).flat()
-    console.log(orders.value)
   } catch (error) {
     console.log(error)
   }

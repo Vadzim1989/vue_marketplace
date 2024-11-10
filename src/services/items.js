@@ -8,12 +8,14 @@ export function itemsService() {
     const addFavorites = (data) => axios.post('/favorites', data);
     const deleteFavorites = (id) => axios.delete(`/favorites/${id}`);
     const order = (data) => axios.post('/orders', data);
+    const getOrders = () => axios.get('/orders');
 
     return {
         datas,
         favorites,
         addFavorites,
         deleteFavorites,
-        order
+        order,
+        getOrders
     }
 }

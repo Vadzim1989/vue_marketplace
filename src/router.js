@@ -2,12 +2,12 @@ import { createWebHashHistory, createRouter } from 'vue-router'
 
 import Home from './pages/Home.vue'
 import Favorites from './pages/Favorites.vue'
-import Profile from './pages/Profile.vue'
+import Orders from './pages/Orders.vue'
 
 const routes = [
   { path: '/', name: 'home', component: Home },
   { path: '/favorites', name: 'favorites', component: Favorites },
-  { path: '/profile', name: 'profile', component: Profile }
+  { path: '/orders', name: 'orders', component: Orders }
 ]
 
 const router = createRouter({
