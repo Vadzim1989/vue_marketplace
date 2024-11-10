@@ -3,7 +3,7 @@ import { reactive, watch, ref, onMounted, inject } from 'vue'
 import { getItemsData } from '@/stores/items'
 import { cartData } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
-import debounce from 'lodash.debounce'
+import debonce from 'lodash.debounce'
 import CardList from '@/components/CardList.vue'
 
 const store = getItemsData();
@@ -15,14 +15,11 @@ const { toggleCartItems } = dataCart;
 
 const onChangeSelect = async (event) => {
   filters.value.sortBy = event.target.value;
-  console.log(items.value);
-  await getItems();
-  console.log(items.value);
 }
 
-const onChangeSearchInput = (event) => {
+const onChangeSearchInput = debonce((event) => {
   filters.value.searchQuery = event.target.value
-}
+}, 500);
 
 onMounted(async () => {
   cart.value = JSON.parse(localStorage.getItem('cart') || '[]')
@@ -33,7 +30,7 @@ onMounted(async () => {
     isAdded: cart.value.some((cartItem) => cartItem.id === item.id)
   }))
 })
-watch(filters, getItems)
+watch(filters, async () => await getItems(), {deep: true})
 watch(cart, () => {
   items.value = items.value.map((item) => ({
     ...item,

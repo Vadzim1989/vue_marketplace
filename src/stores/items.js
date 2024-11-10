@@ -1,13 +1,15 @@
 import { defineStore } from "pinia";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { itemsService } from "@/services/items";
 
 export const getItemsData = defineStore('items', () => {
     const items = ref([]);
     const filters = ref({
-        sortBy: 'price',
+        sortBy: 'title',
         searchQuery: ''
-    })
+    });
+    const favoritesItems = ref([]);
+
     const { datas, favorites, addFavorites, deleteFavorites } = itemsService();
     async function getItems() {
         try {
@@ -33,6 +35,11 @@ export const getItemsData = defineStore('items', () => {
             if (!favorite) {
               return item
             }
+            favoritesItems.value.push({
+              ...item,
+              isFavorite: true,
+              favoriteId: favorite.id
+            })
             return {
               ...item,
               isFavorite: true,
@@ -53,9 +60,11 @@ export const getItemsData = defineStore('items', () => {
             item.isFavorite = true
             const { data } = await addFavorites(obj);
             item.favoriteId = data.id
+            favoritesItems.value.push(item);
           } else {
             item.isFavorite = false
             await deleteFavorites(item.favoriteId);
+            favoritesItems.value = favoritesItems.value.filter((obj) => obj.favoriteId !== item.favoriteId)
             delete item.favoriteId
           }
         } catch (err) {
@@ -65,6 +74,7 @@ export const getItemsData = defineStore('items', () => {
     return { 
       items, 
       filters, 
+      favoritesItems,
       getItems, 
       getFavorites, 
       addToFavorite 
