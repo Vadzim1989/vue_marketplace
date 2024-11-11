@@ -6,7 +6,8 @@ export const getItemsData = defineStore('items', () => {
     const items = ref([]);
     const filters = ref({
         sortBy: 'title',
-        searchQuery: ''
+        searchQuery: '',
+        category: ''
     });
     const favoritesItems = ref([]);
 
@@ -14,9 +15,10 @@ export const getItemsData = defineStore('items', () => {
     async function getItems() {
         try {
             const params = {
-            sortBy: filters.value.sortBy
+            sortBy: filters.value.sortBy,
             }
             if (filters.value.searchQuery) params.title = `*${filters.value.searchQuery}*`
+            if (filters.value.category) params.category = filters.value.category
             const { data } = await datas(params);
             items.value = data.map((obj) => ({
             ...obj,

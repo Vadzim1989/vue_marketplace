@@ -9,7 +9,7 @@
         @click="() => emit('openDrawer')"
       >
         <img src="/cart.svg" alt="Cart" />
-        <b>{{ totalPrice }}</b>
+        <b>{{ totalPrice }} $</b>
       </li>
       <router-link to="/favorites">
         <li class="flex items-center gap-3 text-gray-500 cursor-pointer hover:text-black">

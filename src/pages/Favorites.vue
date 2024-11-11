@@ -1,6 +1,10 @@
+<template>
+  <h2 class="text-3xl font-bold mb-8">Favorites</h2>
+  <CardList :items="favoritesItems" @add-to-favorite="addToFavorite" @add-to-cart="toggleCartItems" />
+</template>
+
 <script setup>
-import { onMounted, ref, inject } from 'vue'
-import { itemsService } from "@/services/items";
+import { onMounted } from 'vue'
 import { cartData } from '@/stores/cart';
 import { getItemsData } from '@/stores/items';
 import { storeToRefs } from 'pinia'
@@ -22,8 +26,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<template>
-  <h2 class="text-3xl font-bold mb-8">Favorites</h2>
-  <CardList :items="favoritesItems" @add-to-favorite="addToFavorite" @add-to-cart="toggleCartItems" />
-</template>

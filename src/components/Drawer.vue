@@ -42,25 +42,25 @@ import { itemsService } from '@/services/items'
 import DrawerHead from './DrawerHead.vue'
 import CartItemList from './CartItemList.vue'
 import InfoBlock from './InfoBlock.vue'
+import { cartData } from '@/stores/cart';
+import { storeToRefs } from 'pinia'
 
-const props = defineProps({
-  totalPrice: Number,
-  cart: Object,
-})
+const dataCart = cartData();
+const { cart, totalPrice }  = storeToRefs(dataCart);
 
 const { order } = itemsService();
 const isCreatingOrder = ref(false)
 const orderCreated = ref(false)
 
 const buttonDisabled = computed(() =>
-  isCreatingOrder.value ? true : props.totalPrice ? false : true
+  isCreatingOrder.value ? true : totalPrice ? false : true
 )
 const createOrder = async () => {
   try {
     isCreatingOrder.value = true
     await order({
       items: cart.value,
-      totalPrice: props.totalPrice
+      totalPrice: totalPrice
     });
     cart.value = []
   } catch (error) {
