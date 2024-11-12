@@ -5,13 +5,13 @@
       <div class="flex flex-col gap-1">
         <span>Category:</span>
         <select @change="onChangeCategory" class="py-2 px-3 border rounded-md outline-none">
-          <option value="">all</option>
-          <option value="electrics">electrics</option>
-          <option value="zoo">zoo</option>
-          <option value="toys">toys</option>
-          <option value="foods">foods</option>
-          <option value="beauty">beauty</option>
-          <option value="clothes">clothes</option>
+          <option value="">All</option>
+          <option value="electrics">Electrics</option>
+          <option value="zoo">Zoo</option>
+          <option value="toys">Toys</option>
+          <option value="foods">Foods</option>
+          <option value="beauty">Beauty</option>
+          <option value="clothes">Clothes</option>
         </select>
       </div>
       <div class="flex flex-col gap-1">
@@ -41,7 +41,7 @@
   </div>
 </template>
 <script setup>
-import { watch, onMounted } from 'vue'
+import { watch } from 'vue'
 import { getItemsData } from '@/stores/items'
 import { cartData } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
@@ -52,7 +52,7 @@ const store = getItemsData();
 const dataCart = cartData();
 const { items, filters } = storeToRefs(store);
 const { cart } = storeToRefs(dataCart);
-const { getItems, getFavorites, addToFavorite } = store;
+const { getItems, addToFavorite } = store;
 const { toggleCartItems } = dataCart; 
 
 const onChangeCategory = async (event) => {
@@ -67,15 +67,6 @@ const onChangeSearchInput = debonce((event) => {
   filters.value.searchQuery = event.target.value
 }, 500);
 
-onMounted(async () => {
-  cart.value = JSON.parse(localStorage.getItem('cart') || '[]')
-  await getItems()
-  await getFavorites()
-  items.value = items.value.map((item) => ({
-    ...item,
-    isAdded: cart.value.some((cartItem) => cartItem.id === item.id)
-  }))
-})
 watch(filters, async () => await getItems(), {deep: true})
 watch(cart, () => {
   items.value = items.value.map((item) => ({

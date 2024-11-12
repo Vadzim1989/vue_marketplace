@@ -17,7 +17,7 @@ import CartItem from './CartItem.vue'
 import { cartData } from '@/stores/cart';
 import { storeToRefs } from 'pinia'
 
-const store = cartData();
-const { cart } = storeToRefs(store);
-const { toggleCartItems } = store;
+const cartStore = cartData();
+const { cart } = storeToRefs(cartStore);
+const { toggleCartItems } = cartStore;
 </script>
