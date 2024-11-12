@@ -1,9 +1,9 @@
 <template>
-  <header class="flex justify-between border-b border-slate-300 px-10 py-8">
-    <router-link to="/">
+  <header class="flex justify-start border-b border-slate-300 px-10 py-8 flex-wrap md:justify-between">
+    <router-link to="/" class="m-auto mb-5 md:m-0">
           <h2 class="text-xl font-bold uppercase">Shop</h2>
     </router-link>
-    <ul class="flex items-center gap-10">
+    <ul class="flex items-center gap-3 md:gap-10">
       <li
         class="flex items-center gap-3 text-gray-500 cursor-pointer hover:text-black"
         @click="() => emit('openDrawer')"

@@ -1,7 +1,7 @@
 <template>
-  <div class="flex justify-between items-center">
+  <div class="bg-white pb-5 flex justify-between items-center flex-col md:flex-row md:sticky md:top-0 md:z-10">
     <h2 class="text-3xl font-bold mb-8">All items</h2>
-    <div class="flex gap-4">
+    <div class="flex gap-4 flex-col md:flex-row">
       <div class="flex flex-col gap-1">
         <span>Category:</span>
         <select @change="onChangeCategory" class="py-2 px-3 border rounded-md outline-none">

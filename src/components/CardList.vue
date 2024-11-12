@@ -1,16 +1,16 @@
 <template>
-  <div class="grid grid-cols-4 gap-5" v-auto-animate>
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-4" v-auto-animate>
     <Card
       v-for="item in items"
       :key="item.id"
-      :id="item.id"
       :title="item.title"
       :image-url="item.imageUrl"
       :price="item.price"
-      :on-click-add="isOrders ? null : () => emit('addToCart', item)"
-      :on-click-favorite="isOrders ? null : () => emit('addToFavorite', item)"
       :is-favorite="item.isFavorite"
       :is-added="item.isAdded"
+      :is-orders="isOrders"
+      :on-click-add="() => emit('addToCart', item)"
+      :on-click-favorite="() => emit('addToFavorite', item)"
     />
   </div>
 </template>

@@ -1,8 +1,8 @@
 <template>
   <Drawer v-if="drawerOpen" @close-drawer="toggleDrawer"/>
-  <div class="w-4/5 m-auto bg-white rounded-xl shadow-2xl mt-14">
+  <div class="w-4/5 m-auto bg-white rounded-xl shadow-inner-xl mt-14">
     <Header @open-drawer="toggleDrawer" :total-price="totalPrice" />
-    <div class="p-10">
+    <div class="p-10 mb-14">
       <router-view> </router-view>
     </div>
   </div>
