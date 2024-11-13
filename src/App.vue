@@ -29,7 +29,7 @@ const toggleDrawer = () => {
 };
 watch(cart, 
   () => {
-    localStorage.setItem('cart', JSON.stringify(cart.value))
+    sessionStorage.setItem('cart', JSON.stringify(cart.value))
   },
   { deep: true }
 )

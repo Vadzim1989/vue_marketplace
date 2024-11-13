@@ -3,28 +3,28 @@
         <div class="item-modal">
         <img
             v-if="!isOrders"
-            :src="!isFavorite ? 'like-1.svg' : 'like-2.svg'"
+            :src="!item.isFavorite ? 'like-1.svg' : 'like-2.svg'"
             alt="Like"
             class="absolute top-8 left-8 cursor-pointer rounded-3xl btn-like"
             @click="$emit('onClickFavorite')"
         />
-        <img class="m-auto max-h-96 border border-slate-100 rounded-3xl" :src="imageUrl" alt="item" />
+        <img class="m-auto max-h-96 border border-slate-100 rounded-3xl" :src="item.imageUrl" alt="item" />
         <img
             src="/close.svg"
             alt="Close"
             class="absolute top-8 right-8 cursor-pointer rounded-3xl btn-close"
             @click="$emit('update:modelValue', false)"
         />
-        <p class="mt-2 p-2 text-center">{{ title }}</p>
+        <p class="mt-2 p-2 text-center">{{ item.title }}</p>
         <div class="flex justify-between px-5 py-5">
             <div class="flex flex-row gap-3">
             <span class="text-slate-400">Price:</span>
-            <b>{{ price }} $</b>
+            <b>{{ item.price }} $</b>
             </div>
             <img
             v-if="!isOrders"
             @click="$emit('onClickAdd')"
-            :src="!isAdded ? 'plus.svg' : 'checked.svg'"
+            :src="!item.isAdded ? 'plus.svg' : 'checked.svg'"
             alt="Plus"
             class="cursor-pointer rounded-3xl btn-add"
             />
@@ -35,11 +35,7 @@
 
 <script setup>
 defineProps({
-    title: String,
-    price: Number,
-    imageUrl: String,
-    isFavorite: Boolean,
-    isAdded: Boolean,
+    item: Object,
     isOrders: Boolean,
 });
 defineEmits(['onClickAdd', 'onClickFavorite', 'update:modellValue']);
@@ -74,5 +70,10 @@ defineEmits(['onClickAdd', 'onClickFavorite', 'update:modellValue']);
 }
 .btn-add {
   box-shadow: 0 0 10px 0 #00ff00;
+}
+@media (max-width: 768px) {
+  .item-modal-wrapper {
+    display: none;
+  }
 }
 </style>
