@@ -67,7 +67,14 @@ const onChangeSearchInput = debonce((event) => {
   filters.value.searchQuery = event.target.value
 }, 500);
 
-watch(filters, async () => await getItems(), {deep: true})
+watch(filters, async () => {
+  await getItems();
+  items.value = items.value.map((item) => ({
+    ...item,
+    isAdded: cart.value.find((cartItem) => cartItem.id === item.id)
+  }));
+}, {deep: true})
+
 watch(cart, () => {
   items.value = items.value.map((item) => ({
     ...item,

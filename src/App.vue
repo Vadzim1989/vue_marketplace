@@ -33,7 +33,6 @@ watch(cart,
   },
   { deep: true }
 )
-
 onMounted(async () => {
   await getItems();
   await getFavorites();
