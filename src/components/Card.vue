@@ -7,7 +7,7 @@
       :src="!item.isFavorite ? 'like-1.svg' : 'like-2.svg'"
       alt="Like"
       class="absolute top-8 left-8 cursor-pointer rounded-3xl btn-like"
-      @click="onClickFavorite"
+      @click="$emit('onClickFavorite')"
     />
     <img :src="item.imageUrl" alt="item" @click="$emit('showModal')"/>
     <p class="mt-2">{{ item.title }}</p>
@@ -18,7 +18,7 @@
       </div>
       <img
         v-if="!isOrders"
-        @click="onClickAdd"
+        @click="$emit('onClickAdd')"
         :src="!item.isAdded ? 'plus.svg' : 'checked.svg'"
         alt="Plus"
         class="cursor-pointer"
@@ -31,10 +31,8 @@
 defineProps({
   item: Object,
   isOrders: Boolean,
-  onClickAdd: Function,
-  onClickFavorite: Function
 });
-defineEmits(['showModal']);
+defineEmits(['showModal', 'onClickAdd', 'onClickFavorite']);
 </script>
 
 <style scoped>

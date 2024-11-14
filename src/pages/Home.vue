@@ -5,21 +5,13 @@
       <div class="flex flex-col gap-1">
         <span>Category:</span>
         <select @change="onChangeCategory" class="py-2 px-3 border rounded-md outline-none">
-          <option value="">All</option>
-          <option value="electrics">Electrics</option>
-          <option value="zoo">Zoo</option>
-          <option value="toys">Toys</option>
-          <option value="foods">Foods</option>
-          <option value="beauty">Beauty</option>
-          <option value="clothes">Clothes</option>
+          <option v-for="(item, index) in CATEGORY_VALES" :key="index" :value="item.value">{{ item.name }}</option>
         </select>
       </div>
       <div class="flex flex-col gap-1">
         <span>Sort By:</span>
         <select @change="onChangeSelect" class="py-2 px-3 border rounded-md outline-none">
-          <option value="title">Name</option>
-          <option value="price">Price(low)</option>
-          <option value="-price">Price(high)</option>
+          <option v-for="(item, index) in SORT_VALUES" :key="index" :value="item.value">{{ item.name }}</option>
         </select>
       </div>
       <div class="flex flex-col gap-1">
@@ -37,7 +29,7 @@
     </div>
   </div>
   <div class="mt-10">
-    <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="toggleCartItems"/>
+    <CardList :items="items"/>
   </div>
 </template>
 <script setup>
@@ -48,12 +40,13 @@ import { storeToRefs } from 'pinia'
 import debonce from 'lodash.debounce'
 import CardList from '@/components/CardList.vue'
 
+import { CATEGORY_VALES, SORT_VALUES } from '@/constants'
+
 const store = getItemsData();
 const dataCart = cartData();
 const { items, filters } = storeToRefs(store);
 const { cart } = storeToRefs(dataCart);
-const { getItems, addToFavorite } = store;
-const { toggleCartItems } = dataCart; 
+const { getItems } = store;
 
 const onChangeCategory = async (event) => {
   filters.value.category = event.target.value;

@@ -5,8 +5,8 @@
       v-model="isOpenModal"
       :item="modalData"
       :is-orders="isOrders"
-      @on-click-add="() => emit('addToCart', modalData)"
-      @on-click-favorite="() => emit('addToFavorite', modalData)"
+      @on-click-add="toggleCartItems(modalData)"
+      @on-click-favorite="addToFavorite(modalData)"
     />
   </teleport>
   <div class="flex justify-evenly flex-row flex-wrap gap-4 card-list" v-auto-animate>
@@ -15,8 +15,8 @@
       :key="item.id"
       :item="item"
       :is-orders="isOrders"
-      :on-click-add="() => emit('addToCart', item)"
-      :on-click-favorite="() => emit('addToFavorite', item)"
+      @on-click-add="toggleCartItems(item)"
+      @on-click-favorite="addToFavorite(item)"
       @show-modal="showModal(item)"
     />
   </div>
@@ -26,12 +26,19 @@
 import { ref } from 'vue';
 import Card from './Card.vue'
 import ModalItem from "./ModalItem.vue";
+import { getItemsData } from '@/stores/items';
+import { cartData } from '@/stores/cart';
 
 defineProps({
   items: Array,
   isOrders: Boolean
 });
-const emit = defineEmits(['addToFavorite', 'addToCart']);
+
+const itemStore = getItemsData();
+const cartStore = cartData();
+
+const { addToFavorite } = itemStore;
+const { toggleCartItems } = cartStore;
 
 const isOpenModal = ref(false);
 const modalData = ref({});
