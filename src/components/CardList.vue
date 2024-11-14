@@ -5,8 +5,8 @@
       v-model="isOpenModal"
       :item="modalData"
       :is-orders="isOrders"
-      @on-click-add="toggleCartItems(modalData)"
-      @on-click-favorite="addToFavorite(modalData)"
+      @on-click-add="() => toggleCartItems(modalData)"
+      @on-click-favorite="() => addToFavorite(modalData)"
     />
   </teleport>
   <div class="flex justify-evenly flex-row flex-wrap gap-4 card-list" v-auto-animate>
@@ -15,9 +15,9 @@
       :key="item.id"
       :item="item"
       :is-orders="isOrders"
-      @on-click-add="toggleCartItems(item)"
-      @on-click-favorite="addToFavorite(item)"
-      @show-modal="showModal(item)"
+      @on-click-add="() => toggleCartItems(item)"
+      @on-click-favorite="() => addToFavorite(item)"
+      @show-modal="() => showModal(item)"
     />
   </div>
 </template>

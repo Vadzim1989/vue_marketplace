@@ -7,7 +7,7 @@
       :image-url="item.imageUrl"
       :title="item.title"
       :price="item.price"
-      @remove-from-cart="toggleCartItems(item)"
+      @remove-from-cart="() => toggleCartItems(item)"
     />
   </div>
 </template>
