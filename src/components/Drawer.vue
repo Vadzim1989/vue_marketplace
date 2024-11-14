@@ -53,14 +53,14 @@ const isCreatingOrder = ref(false)
 const orderCreated = ref(false)
 
 const buttonDisabled = computed(() =>
-  isCreatingOrder.value ? true : totalPrice ? false : true
+  isCreatingOrder.value ? true : totalPrice.value ? false : true
 )
 const createOrder = async () => {
   try {
     isCreatingOrder.value = true
     await order({
       items: cart.value,
-      totalPrice: totalPrice
+      totalPrice: totalPrice.value
     });
     cart.value = []
   } catch (error) {
