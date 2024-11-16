@@ -8,7 +8,8 @@ import { onMounted, ref } from 'vue'
 import { itemsService } from '@/services/items'
 import CardList from '@/components/CardList.vue'
 
-const orders = ref([])
+const orders = ref([]);
+
 
 onMounted(async () => {
   try {
