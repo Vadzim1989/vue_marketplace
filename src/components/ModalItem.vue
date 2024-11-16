@@ -2,7 +2,7 @@
     <div class="item-modal-wrapper z-20">
         <div class="item-modal">
         <img
-            v-if="!isOrders"
+            v-if="!isOrders && user.id"
             :src="!item.isFavorite ? 'like-1.svg' : 'like-2.svg'"
             alt="Like"
             class="absolute top-8 left-8 cursor-pointer rounded-3xl btn-like"
@@ -22,7 +22,7 @@
             <b>{{ item.price }} $</b>
             </div>
             <img
-            v-if="!isOrders"
+            v-if="!isOrders && user.id"
             @click="$emit('onClickAdd')"
             :src="!item.isAdded ? 'plus.svg' : 'checked.svg'"
             alt="Plus"
@@ -34,6 +34,12 @@
 </template>
 
 <script setup>
+import { auth } from '@/stores/auth';
+import { storeToRefs } from 'pinia';
+
+const authData = auth();
+const { user } = storeToRefs(authData);
+
 defineProps({
     item: Object,
     isOrders: Boolean,
