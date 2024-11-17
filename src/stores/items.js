@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { itemsService } from "@/services/items";
+import { auth } from "./auth";
+import { storeToRefs } from "pinia";
 
 export const getItemsData = defineStore('items', () => {
     const items = ref([]);
@@ -10,6 +12,9 @@ export const getItemsData = defineStore('items', () => {
         category: ''
     });
     const favoritesItems = ref([]);
+
+    const authData = auth();
+    const { user } = storeToRefs(authData);
 
     const { datas, favorites, addFavorites, deleteFavorites } = itemsService();
     async function getItems() {
@@ -29,9 +34,12 @@ export const getItemsData = defineStore('items', () => {
             console.error(err)
         }
     }
-    async function getFavorites() {
+    async function getFavorites(id) {
         try {
-          const { data } = await favorites();
+          const params = {
+            userId: id
+          }
+          const { data } = await favorites(params);
           items.value = items.value.map((item) => {
             const favorite = data.find((favorite) => favorite.parentId === item.id)
             if (!favorite) {
@@ -57,8 +65,10 @@ export const getItemsData = defineStore('items', () => {
           if (!item.isFavorite) {
             const obj = {
               parentId: item.id,
+              userId: user.value.id,
               item
             }
+            console.log(obj);
             item.isFavorite = true
             const { data } = await addFavorites(obj);
             item.favoriteId = data.id

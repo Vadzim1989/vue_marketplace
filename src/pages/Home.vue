@@ -37,6 +37,7 @@ import { watch } from 'vue'
 import { getItemsData } from '@/stores/items'
 import { cartData } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
+
 import debonce from 'lodash.debounce'
 import CardList from '@/components/CardList.vue'
 

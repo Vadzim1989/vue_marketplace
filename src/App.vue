@@ -45,7 +45,7 @@ watch(user,
 )
 onMounted(async () => {
   await getItems();
-  await getFavorites();
+  if(user.value.id) await getFavorites(user.value.id);
   items.value = items.value.map((item) => ({
     ...item,
     isAdded: cart.value.find((cartItem) => cartItem.id === item.id)

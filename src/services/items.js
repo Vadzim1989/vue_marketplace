@@ -4,11 +4,11 @@ export function itemsService() {
     const axios = axiosIntanse;
 
     const datas = (params) => axios.get('/items', { params });
-    const favorites = () => axios.get('/favorites');
+    const favorites = (params) => axios.get('/favorites', { params });
     const addFavorites = (data) => axios.post('/favorites', data);
     const deleteFavorites = (id) => axios.delete(`/favorites/${id}`);
     const order = (data) => axios.post('/orders', data);
-    const getOrders = () => axios.get('/orders');
+    const getOrders = (params) => axios.get('/orders', { params });
 
     return {
         datas,

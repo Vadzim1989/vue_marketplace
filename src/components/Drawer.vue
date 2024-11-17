@@ -43,10 +43,14 @@ import DrawerHead from './DrawerHead.vue'
 import CartItemList from './CartItemList.vue'
 import InfoBlock from './InfoBlock.vue'
 import { cartData } from '@/stores/cart';
-import { storeToRefs } from 'pinia'
+import { auth } from '@/stores/auth';
+import { storeToRefs } from 'pinia';
 
 const dataCart = cartData();
-const { cart, totalPrice }  = storeToRefs(dataCart);
+const { cart, totalPrice } = storeToRefs(dataCart);
+
+const authData = auth();
+const { user } = storeToRefs(authData);
 
 const { order } = itemsService();
 const isCreatingOrder = ref(false)
@@ -60,6 +64,7 @@ const createOrder = async () => {
     isCreatingOrder.value = true
     await order({
       items: cart.value,
+      userId: user.value.id,
       totalPrice: totalPrice.value
     });
     cart.value = []

@@ -10,11 +10,14 @@
 
 <script setup>
 import { auth } from '@/stores/auth';
+import { getItemsData } from '@/stores/items';
 import { storeToRefs } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 
 const userData = auth();
-const { singIn } = storeToRefs(userData); 
+const itemsData = getItemsData()
+const { user, singIn } = storeToRefs(userData); 
+const { getFavorites } = itemsData; 
 
 const { 
     loginUser,
@@ -29,6 +32,15 @@ const submitBtnTitle = computed(() => singIn.value ? 'Sing In' : 'Sing up');
 async function onSubmit() {
     await loginUser(login.value, password.value);
 }
+
+watch(user, 
+  async () => {
+    await getFavorites(user.value.id);
+  },
+  {
+    deep: true
+  } 
+)
 </script>
 
 <style scoped>
