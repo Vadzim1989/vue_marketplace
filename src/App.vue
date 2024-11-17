@@ -12,6 +12,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { getItemsData } from '@/stores/items'
 import { cartData } from '@/stores/cart';
+import { auth } from '@/stores/auth';
 import { storeToRefs } from 'pinia'
 
 import Header from './components/Header.vue'
@@ -24,12 +25,21 @@ const { cart, totalPrice }  = storeToRefs(dataCart);
 const { getItems, getFavorites } = store;
 const drawerOpen = ref(false);
 
+const authData = auth();
+const { user } = storeToRefs(authData);
+
 const toggleDrawer = () => {
   drawerOpen.value = !drawerOpen.value
 };
 watch(cart, 
   () => {
     sessionStorage.setItem('cart', JSON.stringify(cart.value))
+  },
+  { deep: true }
+);
+watch(user,
+  () => {
+    sessionStorage.setItem('user', JSON.stringify(user.value))
   },
   { deep: true }
 )

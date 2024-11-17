@@ -65,6 +65,7 @@ defineProps({
 
 function logOut() {
   user.value = {};
+  sessionStorage.removeItem('user');
 } 
 
 watch(favoritesItems, () => {
