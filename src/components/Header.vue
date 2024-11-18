@@ -51,7 +51,7 @@ import { auth } from '@/stores/auth';
 import { storeToRefs } from 'pinia'
 
 const favoritesData = getItemsData();
-const { items, favoritesItems } = storeToRefs(favoritesData); 
+const { favoritesItems } = storeToRefs(favoritesData); 
 const { getItems } = favoritesData;
 
 const authData = auth();
@@ -66,7 +66,6 @@ defineProps({
 
 async function logOut() {
   user.value = {};
-  items.value = [];
   favoritesItems.value = [];
   sessionStorage.removeItem('user');
   await getItems();
