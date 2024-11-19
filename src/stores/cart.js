@@ -7,19 +7,8 @@ export const cartData = defineStore('cart', () => {
     
     cart.value = JSON.parse(sessionStorage.getItem('cart') || '[]')
 
-    async function toggleCartItems(item) {
-        if (!item.isAdded) {
-            cart.value.push(item)
-            item.isAdded = true
-        } else {
-            cart.value.splice(cart.value.indexOf(item), 1)
-            item.isAdded = false
-        }
-    }
-
     return {
         cart,
         totalPrice,
-        toggleCartItems
     }
 });

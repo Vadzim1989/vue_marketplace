@@ -37,6 +37,7 @@ import { watch } from 'vue'
 import { getItemsData } from '@/stores/items'
 import { cartData } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
+import { useItems } from '@/utils/useItems'
 
 import debonce from 'lodash.debounce'
 import CardList from '@/components/CardList.vue'
@@ -47,7 +48,7 @@ const store = getItemsData();
 const dataCart = cartData();
 const { items, filters } = storeToRefs(store);
 const { cart } = storeToRefs(dataCart);
-const { getItems } = store;
+const { getItems } = useItems();
 
 const onChangeCategory = async (event) => {
   filters.value.category = event.target.value;

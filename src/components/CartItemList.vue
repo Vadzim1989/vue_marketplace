@@ -14,10 +14,11 @@
 
 <script setup>
 import CartItem from './CartItem.vue'
+import { useItems } from '@/utils/useItems';
 import { cartData } from '@/stores/cart';
 import { storeToRefs } from 'pinia'
 
 const cartStore = cartData();
 const { cart } = storeToRefs(cartStore);
-const { toggleCartItems } = cartStore;
+const { toggleCartItems } = useItems();
 </script>

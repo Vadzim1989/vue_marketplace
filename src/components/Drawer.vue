@@ -67,7 +67,7 @@ const createOrder = async () => {
       userId: user.value.id,
       totalPrice: totalPrice.value
     });
-    cart.value = []
+    cart.value = [];
   } catch (error) {
     console.log(error)
   } finally {

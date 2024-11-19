@@ -48,11 +48,12 @@
 import { ref, watch } from 'vue'
 import { getItemsData } from '@/stores/items';
 import { auth } from '@/stores/auth';
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia';
+import { useItems } from '@/utils/useItems';
 
 const favoritesData = getItemsData();
 const { favoritesItems } = storeToRefs(favoritesData); 
-const { getItems } = favoritesData;
+const { getItems } = useItems();
 
 const authData = auth();
 const { user, singIn } = storeToRefs(authData);

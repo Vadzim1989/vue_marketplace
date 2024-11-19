@@ -26,19 +26,14 @@
 import { ref } from 'vue';
 import Card from './Card.vue'
 import ModalItem from "./ModalItem.vue";
-import { getItemsData } from '@/stores/items';
-import { cartData } from '@/stores/cart';
+import { useItems } from '@/utils/useItems';
 
 defineProps({
   items: Array,
   isOrders: Boolean
 });
 
-const itemStore = getItemsData();
-const cartStore = cartData();
-
-const { addToFavorite } = itemStore;
-const { toggleCartItems } = cartStore;
+const { addToFavorite, toggleCartItems } = useItems();
 
 const isOpenModal = ref(false);
 const modalData = ref({});
