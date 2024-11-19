@@ -1,5 +1,5 @@
 <template>
-  <h2 class="text-3xl font-bold mb-8">Favorites</h2>
+  <h2 class="text-3xl font-bold flex-wrap mb-8">Favorites</h2>
   <CardList :items="favoritesItems" />
 </template>
 

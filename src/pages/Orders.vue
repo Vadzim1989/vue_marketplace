@@ -1,5 +1,5 @@
 <template>
-  <h2 class="text-3xl font-bold mb-8">My orders</h2>
+  <h2 class="text-3xl font-bold flex-wrap mb-8">My orders</h2>
   <CardList :items="orders" is-orders />
 </template>
 
