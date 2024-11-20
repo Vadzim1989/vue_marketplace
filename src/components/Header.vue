@@ -50,6 +50,7 @@ import { getItemsData } from '@/stores/items';
 import { auth } from '@/stores/auth';
 import { storeToRefs } from 'pinia';
 import { useItems } from '@/utils/useItems';
+import { useRouter } from 'vue-router';
 
 const favoritesData = getItemsData();
 const { favoritesItems } = storeToRefs(favoritesData); 
@@ -57,6 +58,7 @@ const { getItems } = useItems();
 
 const authData = auth();
 const { user, singIn } = storeToRefs(authData);
+const router = useRouter();
 
 const logo = ref(!favoritesItems.value.length ? 'heart.svg' : 'full-heart.svg');
 
@@ -70,6 +72,7 @@ async function logOut() {
   favoritesItems.value = [];
   sessionStorage.removeItem('user');
   await getItems();
+  router.push('/');
 } 
 
 watch(favoritesItems, () => {
