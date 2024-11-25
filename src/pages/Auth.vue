@@ -2,10 +2,18 @@
     <form @submit.stop.prevent class="auth-form">
         <div class="inputs-form">
             <input class="focus:outline-yellow-500 focus:bg-yellow-100" name="login" type="text" v-model="login" placeholder="Login...">
-            <input class="focus:outline-yellow-500 focus:bg-yellow-100" name="password" type="text" v-model="password" placeholder="Password...">
+            <input class="focus:outline-yellow-500 focus:bg-yellow-100" name="password" type="password" v-model="password" placeholder="Password...">
         </div>
         <input class="submit-btn" :class="{active: isActiveBtn}" type="submit" :disabled="!isActiveBtn" :value="submitBtnTitle" @click="loginUser">
     </form>
+    <details v-if="error">
+        <summary class="text-red-500 font-medium">Error</summary>
+        <span>{{ error }}</span>
+        <ol>
+            <li>The minimum login length is 3 characters.</li>
+            <li>The password must contain from 6 to 20 characters, must contain at least one special character, at least one uppercase and lowercase letter.</li>
+        </ol>
+    </details>
 </template>
 
 <script setup>
@@ -22,6 +30,7 @@ const { getFavorites } = useItems();
 
 const login = ref('');
 const password = ref('');
+const error = ref('');
 
 const isActiveBtn = computed(() => login.value && password.value);
 const submitBtnTitle = computed(() => singIn.value ? 'Sing In' : 'Sing up');
@@ -30,19 +39,31 @@ const router = useRouter();
 
 const { authUser, registerUser } = authServices();
 
+function validatePassword(password) {
+    return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/.test(password);
+};
+
+function validateLogin(login) {
+    return login.length >= 3;
+};
+
 async function loginUser() {
     try {
-        const params = {
+        if(!singIn.value && (!validatePassword(password.value) || !validateLogin(login.value))) {
+            throw new Error('Read the rules!');
+        } else {
+            const params = {
             login: login.value,
             password: password.value,
-        };
-        const { data } = singIn.value ? await authUser(params) : registerUser(params);
-        user.value.login = data.data.login;
-        user.value.id = data.data.id;
-        sessionStorage.setItem('user', JSON.stringify(user.value));
-        router.push('/');
-    } catch (error) {
-        console.log(error);
+            };
+            const { data } = singIn.value ? await authUser(params) : registerUser(params);
+            user.value.login = data.data.login;
+            user.value.id = data.data.id;
+            sessionStorage.setItem('user', JSON.stringify(user.value));
+            router.push('/');
+        }
+    } catch (err) {
+        error.value = err?.response?.data?.message ?? err;
     }
 };
 
