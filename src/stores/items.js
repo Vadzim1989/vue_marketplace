@@ -38,7 +38,7 @@ export const getItemsData = defineStore('items', () => {
         try {
           const params = {
             userId: id
-          }
+          };
           const { data } = await favorites(params);
           items.value = items.value.map((item) => {
             const favorite = data.find((favorite) => favorite.parentId === item.id)

@@ -37,11 +37,11 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import { itemsService } from '@/services/items'
-import DrawerHead from './DrawerHead.vue'
-import CartItemList from './CartItemList.vue'
-import InfoBlock from './InfoBlock.vue'
+import { computed, ref } from 'vue';
+import { itemsService } from '@/services/items';
+import DrawerHead from './DrawerHead.vue';
+import CartItemList from './CartItemList.vue';
+import InfoBlock from './InfoBlock.vue';
 import { cartData } from '@/stores/cart';
 import { auth } from '@/stores/auth';
 import { storeToRefs } from 'pinia';
@@ -53,15 +53,15 @@ const authData = auth();
 const { user } = storeToRefs(authData);
 
 const { order } = itemsService();
-const isCreatingOrder = ref(false)
-const orderCreated = ref(false)
+const isCreatingOrder = ref(false);
+const orderCreated = ref(false);
 
 const buttonDisabled = computed(() =>
   isCreatingOrder.value ? true : totalPrice.value ? false : true
-)
+);
 const createOrder = async () => {
   try {
-    isCreatingOrder.value = true
+    isCreatingOrder.value = true;
     await order({
       items: cart.value,
       userId: user.value.id,
@@ -69,10 +69,10 @@ const createOrder = async () => {
     });
     cart.value = [];
   } catch (error) {
-    console.log(error)
+    console.log(error);
   } finally {
-    isCreatingOrder.value = false
-    orderCreated.value = true
+    isCreatingOrder.value = false;
+    orderCreated.value = true;
   }
-}
+};
 </script>

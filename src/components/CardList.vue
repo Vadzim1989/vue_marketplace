@@ -1,7 +1,7 @@
 <template>
   <teleport to='body'>
     <ModalItem
-      v-if="isOpenModal"
+      v-if="isOpenModal && isValideWindowSize"
       v-model="isOpenModal"
       :item="modalData"
       :is-orders="isOrders"
@@ -23,8 +23,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import Card from './Card.vue'
+import { ref, computed } from 'vue';
+import Card from './Card.vue';
 import ModalItem from "./ModalItem.vue";
 import { useItems } from '@/utils/useItems';
 
@@ -34,6 +34,8 @@ defineProps({
 });
 
 const { addToFavorite, toggleCartItems } = useItems();
+
+const isValideWindowSize = computed(() => window.innerWidth > 600);
 
 const isOpenModal = ref(false);
 const modalData = ref({});

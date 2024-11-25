@@ -22,6 +22,6 @@ defineProps({
   imageUrl: String,
   title: String,
   price: Number
-})
-const emit = defineEmits(['removeFromCart'])
+});
+const emit = defineEmits(['removeFromCart']);
 </script>

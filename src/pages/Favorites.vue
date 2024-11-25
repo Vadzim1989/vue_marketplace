@@ -5,8 +5,8 @@
 
 <script setup>
 import { getItemsData } from '@/stores/items';
-import { storeToRefs } from 'pinia'
-import CardList from '@/components/CardList.vue'
+import { storeToRefs } from 'pinia';
+import CardList from '@/components/CardList.vue';
 
 const favoriteData = getItemsData();
 const { favoritesItems } = storeToRefs(favoriteData);

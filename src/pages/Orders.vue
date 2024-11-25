@@ -4,11 +4,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { itemsService } from '@/services/items'
+import { onMounted, ref } from 'vue';
+import { itemsService } from '@/services/items';
 import { auth } from '@/stores/auth';
 import { storeToRefs } from 'pinia';
-import CardList from '@/components/CardList.vue'
+import CardList from '@/components/CardList.vue';
 
 const orders = ref([]);
 
@@ -19,12 +19,12 @@ onMounted(async () => {
   try {
     const params = {
       userId: user.value.id
-    }
+    };
     const { getOrders } = itemsService();
     const { data } = await getOrders(params);
     orders.value = data.map(({ items }) => items).flat()
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-})
+});
 </script>

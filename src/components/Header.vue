@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch } from 'vue';
 import { getItemsData } from '@/stores/items';
 import { auth } from '@/stores/auth';
 import { storeToRefs } from 'pinia';
@@ -62,10 +62,10 @@ const router = useRouter();
 
 const logo = ref(!favoritesItems.value.length ? 'heart.svg' : 'full-heart.svg');
 
-const emit = defineEmits(['openDrawer'])
+const emit = defineEmits(['openDrawer']);
 defineProps({
   totalPrice: Number
-})
+});
 
 async function logOut() {
   user.value = {};
@@ -73,13 +73,13 @@ async function logOut() {
   sessionStorage.removeItem('user');
   await getItems();
   router.push('/');
-} 
+};
 
 watch(favoritesItems, () => {
   logo.value = !favoritesItems.value.length ? 'heart.svg' : 'full-heart.svg';
 }, {
   deep: true
-})
+});
 
 </script>
 

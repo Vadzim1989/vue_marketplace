@@ -4,13 +4,13 @@
     <div class="flex gap-4 flex-col md:flex-row">
       <div class="flex flex-col gap-1">
         <span>Category:</span>
-        <select @change="onChangeCategory" class="py-2 px-3 border rounded-md outline-none">
+        <select @change="onChangeCategory" class="py-2 px-3 border rounded-md outline-none max-w-56">
           <option v-for="(item, index) in CATEGORY_VALES" :key="index" :value="item.value">{{ item.name }}</option>
         </select>
       </div>
       <div class="flex flex-col gap-1">
         <span>Sort By:</span>
-        <select @change="onChangeSelect" class="py-2 px-3 border rounded-md outline-none">
+        <select @change="onChangeSelect" class="py-2 px-3 border rounded-md outline-none max-w-56">
           <option v-for="(item, index) in SORT_VALUES" :key="index" :value="item.value">{{ item.name }}</option>
         </select>
       </div>
@@ -22,7 +22,7 @@
             @input="onChangeSearchInput"
             type="text"
             placeholder="search..."
-            class="border rounded-md py-2 pl-11 pr-4 outline-none focus:border-gray-400"
+            class="border rounded-md py-2 pl-11 pr-4 outline-none focus:border-gray-400 max-w-56"
           />
         </div>
       </div>
@@ -33,16 +33,16 @@
   </div>
 </template>
 <script setup>
-import { watch } from 'vue'
-import { getItemsData } from '@/stores/items'
-import { cartData } from '@/stores/cart'
-import { storeToRefs } from 'pinia'
-import { useItems } from '@/utils/useItems'
+import { watch } from 'vue';
+import { getItemsData } from '@/stores/items';
+import { cartData } from '@/stores/cart';
+import { storeToRefs } from 'pinia';
+import { useItems } from '@/utils/useItems';
 
-import debonce from 'lodash.debounce'
-import CardList from '@/components/CardList.vue'
+import debonce from 'lodash.debounce';
+import CardList from '@/components/CardList.vue';
 
-import { CATEGORY_VALES, SORT_VALUES } from '@/constants'
+import { CATEGORY_VALES, SORT_VALUES } from '@/constants';
 
 const store = getItemsData();
 const dataCart = cartData();
@@ -52,11 +52,11 @@ const { getItems } = useItems();
 
 const onChangeCategory = async (event) => {
   filters.value.category = event.target.value;
-}
+};
 
 const onChangeSelect = async (event) => {
   filters.value.sortBy = event.target.value;
-}
+};
 
 const onChangeSearchInput = debonce((event) => {
   filters.value.searchQuery = event.target.value
@@ -68,12 +68,12 @@ watch(filters, async () => {
     ...item,
     isAdded: cart.value.find((cartItem) => cartItem.id === item.id)
   }));
-}, {deep: true})
+}, {deep: true});
 
 watch(cart, () => {
   items.value = items.value.map((item) => ({
     ...item,
     isAdded: false
   }))
-})
+});
 </script>

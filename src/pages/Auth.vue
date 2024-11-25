@@ -23,10 +23,10 @@ const { getFavorites } = useItems();
 const login = ref('');
 const password = ref('');
 
-const isActiveBtn = computed(() => login.value && password.value) 
+const isActiveBtn = computed(() => login.value && password.value);
 const submitBtnTitle = computed(() => singIn.value ? 'Sing In' : 'Sing up');
 
-const router = useRouter()
+const router = useRouter();
 
 const { authUser, registerUser } = authServices();
 
@@ -35,16 +35,16 @@ async function loginUser() {
         const params = {
             login: login.value,
             password: password.value,
-        }
+        };
         const { data } = singIn.value ? await authUser(params) : registerUser(params);
         user.value.login = data.data.login;
         user.value.id = data.data.id;
         sessionStorage.setItem('user', JSON.stringify(user.value));
         router.push('/');
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};
 
 watch(user, 
   async () => {
@@ -53,7 +53,7 @@ watch(user,
   {
     deep: true
   } 
-)
+);
 </script>
 
 <style scoped>
