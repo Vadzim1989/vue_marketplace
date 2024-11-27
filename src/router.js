@@ -1,10 +1,11 @@
-import { createWebHashHistory, createRouter } from 'vue-router'
-import { checkAuth } from './middleware/checkAuth'
+import { createWebHashHistory, createRouter } from 'vue-router';
+import { checkAuth } from './middleware/checkAuth';
 
-import Home from './pages/Home.vue'
-import Favorites from './pages/Favorites.vue'
-import Orders from './pages/Orders.vue'
-import Auth from './pages/Auth.vue'
+import Home from './pages/Home.vue';
+import Favorites from './pages/Favorites.vue';
+import Orders from './pages/Orders.vue';
+import Auth from './pages/Auth.vue';
+import Page404 from './pages/Page404.vue';
 
 const routes = [
   { 
@@ -29,6 +30,11 @@ const routes = [
     name: 'login', 
     component: Auth 
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: Page404
+  }
 ]
 
 const router = createRouter({
