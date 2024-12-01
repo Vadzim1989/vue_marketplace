@@ -68,7 +68,6 @@ export const useItems = () => {
               userId: user.value.id,
               item
             }
-            console.log(obj);
             item.isFavorite = true
             const { data } = await addFavorites(obj);
             item.favoriteId = data.id
