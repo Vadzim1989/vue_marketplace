@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { getItemsData } from '@/stores/items'
 import { cartData } from '@/stores/cart';
 import { auth } from '@/stores/auth';
@@ -32,6 +32,15 @@ const { user } = storeToRefs(authData);
 const toggleDrawer = () => {
   drawerOpen.value = !drawerOpen.value
 };
+
+watch(cart, 
+  () => {
+    sessionStorage.setItem('cart', JSON.stringify(cart.value));
+  },
+  {
+    deep: true
+  }
+)
 
 onMounted(async () => {
   await getItems();
