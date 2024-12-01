@@ -57,7 +57,7 @@ const { favoritesItems } = storeToRefs(favoritesData);
 const { getItems } = useItems();
 
 const authData = auth();
-const { user, singIn } = storeToRefs(authData);
+const { user, singIn, token } = storeToRefs(authData);
 const router = useRouter();
 
 const logo = ref(!favoritesItems.value.length ? 'heart.svg' : 'full-heart.svg');
@@ -69,8 +69,10 @@ defineProps({
 
 async function logOut() {
   user.value = {};
+  token.value = null;
   favoritesItems.value = [];
   sessionStorage.removeItem('user');
+  sessionStorage.removeItem('token');
   await getItems();
   router.push('/');
 };

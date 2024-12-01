@@ -68,6 +68,7 @@ async function loginUser() {
                 token.value = data?.token;
                 user.value.login = data?.data?.login;
                 user.value.id = data?.data?.id;
+                sessionStorage.setItem('token', JSON.stringify(token.value));
                 sessionStorage.setItem('user', JSON.stringify(user.value));
                 router.push('/');
             }
@@ -116,6 +117,9 @@ watch(user,
 }
 .submit-btn.active:hover {
     background-color: #d7eeac;
+}
+details {
+    word-wrap: break-word;
 }
 summary {
     cursor: pointer;
