@@ -6,12 +6,14 @@ export const auth = defineStore('auth', () => {
         login: '',
         id: null,
     });
+    const token = ref(null);
     const singIn = ref(true);
 
     if(sessionStorage.getItem('user')) user.value = JSON.parse(sessionStorage.getItem('user'));
 
     return {
         user,
+        token,
         singIn,
     }
 })

@@ -28,7 +28,7 @@ import { useItems } from '@/utils/useItems';
 import Loader from '@/components/Loader.vue';
 
 const userData = auth();
-const { user, singIn } = storeToRefs(userData); 
+const { user, token, singIn } = storeToRefs(userData); 
 const { getFavorites } = useItems();
 
 const login = ref('');
@@ -65,6 +65,7 @@ async function loginUser() {
             };
             const { data } = singIn.value ? await authUser(params) : await registerUser(params);
             if (data) {
+                token.value = data?.token;
                 user.value.login = data?.data?.login;
                 user.value.id = data?.data?.id;
                 sessionStorage.setItem('user', JSON.stringify(user.value));
@@ -115,5 +116,8 @@ watch(user,
 }
 .submit-btn.active:hover {
     background-color: #d7eeac;
+}
+summary {
+    cursor: pointer;
 }
 </style>
