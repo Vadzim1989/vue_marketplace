@@ -88,6 +88,14 @@ watch(user,
     deep: true
   } 
 );
+watch([login, password], 
+    () => {
+        errorText.value = null
+    },
+    {
+        deep: true
+    }
+)
 </script>
 
 <style scoped>
