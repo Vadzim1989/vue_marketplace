@@ -8,6 +8,21 @@ export function itemsService() {
     const { token } = storeToRefs(authData);
 
     const datas = (params) => axios.get('/items', { params });
+    const addItem = (data) => axios.post('/items', data, { 
+        headers: {
+            "Authorization": `Bearer ${token.value }`
+        },
+    });
+    const updateItem = (id, data) => axios.patch(`/items/${id}`, data, { 
+        headers: {
+            "Authorization": `Bearer ${token.value }`
+        },
+    });
+    const deleteItem = (id) => axios.delete(`/items/${id}`, { 
+        headers: {
+            "Authorization": `Bearer ${token.value }`
+        },
+    });
     const favorites = (params) => axios.get('/favorites', { 
         headers: {
             "Authorization": `Bearer ${token.value }`
@@ -39,6 +54,9 @@ export function itemsService() {
 
     return {
         datas,
+        addItem,
+        updateItem,
+        deleteItem,
         favorites,
         addFavorites,
         deleteFavorites,

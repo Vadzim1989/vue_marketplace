@@ -4,6 +4,7 @@ import { ref } from "vue";
 export const auth = defineStore('auth', () => {
     const user = ref({
         login: '',
+        role: '',
         id: null,
     });
     const token = ref(null);

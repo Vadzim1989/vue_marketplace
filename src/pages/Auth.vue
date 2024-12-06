@@ -68,6 +68,7 @@ async function loginUser() {
                 token.value = data?.token;
                 user.value.login = data?.data?.login;
                 user.value.id = data?.data?.id;
+                if (data?.data?.role) user.value.role = data?.data?.role;
                 sessionStorage.setItem('token', JSON.stringify(token.value));
                 sessionStorage.setItem('user', JSON.stringify(user.value));
                 router.push('/');

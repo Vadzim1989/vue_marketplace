@@ -7,18 +7,23 @@
       :src="!item.isFavorite ? 'like-1.svg' : 'like-2.svg'"
       alt="Like"
       class="absolute top-8 left-8 cursor-pointer rounded-3xl btn-like"
-      @click="$emit('onClickFavorite')"
+      @click="emit('onClickFavorite')"
     />
-    <img :src="item.imageUrl" alt="item" @click="$emit('showModal')"/>
+    <img :src="item.imageUrl" alt="item" @click="emit('showModal')"/>
     <p class="mt-2">{{ item.title }}</p>
     <div class="flex justify-between mt-5">
-      <div class="flex flex-col">
+      <div class="flex flex-row gap-2">
+        <button 
+          v-if="user.role === 'admin' && !isFavorite" 
+          class="cursor-pointer rounded-3xl btn-edit"
+          @click="emit('editMode')"
+          >&#x270E;</button>
         <span class="text-slate-400">Price:</span>
         <b>{{ item.price }} $</b>
       </div>
       <img
         v-if="!isOrders && user.id"
-        @click="$emit('onClickAdd')"
+        @click="emit('onClickAdd')"
         :src="!item.isAdded ? 'plus.svg' : 'checked.svg'"
         alt="Plus"
         class="cursor-pointer"
@@ -37,18 +42,20 @@ const { user } = storeToRefs(authData);
 defineProps({
   item: Object,
   isOrders: Boolean,
+  isFavorite: Boolean,
 });
-defineEmits(['showModal', 'onClickAdd', 'onClickFavorite']);
+const emit = defineEmits(['showModal', 'onClickAdd', 'onClickFavorite', 'editMode']);
 </script>
 
 <style scoped>
+.btn-edit {
+  width: 34px;
+  height: 34px;
+}
 .btn-like {
   box-shadow: 0 0 10px 0 #ff0000;
 }
-.btn-close {
-  box-shadow: 0 0 10px 0 #000;
-}
-.btn-add {
+.btn-edit {
   box-shadow: 0 0 10px 0 #00ff00;
 }
 </style>

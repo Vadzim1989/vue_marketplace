@@ -1,6 +1,6 @@
 <template>
   <teleport to='body'>
-    <ModalItem
+    <ItemsModalInfo
       v-if="isOpenModal && isValideWindowSize"
       v-model="isOpenModal"
       :item="modalData"
@@ -15,6 +15,8 @@
       :key="item.id"
       :item="item"
       :is-orders="isOrders"
+      :is-favorite="isFavorite"
+      @edit-mode="() => $emit('editMode', item)"
       @on-click-add="() => toggleCartItems(item)"
       @on-click-favorite="() => addToFavorite(item)"
       @show-modal="() => showModal(item)"
@@ -25,13 +27,16 @@
 <script setup>
 import { ref, computed } from 'vue';
 import Card from './Card.vue';
-import ModalItem from "./ModalItem.vue";
+import ItemsModalInfo from "./ItemsModalInfo.vue";
 import { useItems } from '@/utils/useItems';
 
 defineProps({
   items: Array,
-  isOrders: Boolean
+  isOrders: Boolean,
+  isFavorite: Boolean,
 });
+
+defineEmits(['editMode'])
 
 const { addToFavorite, toggleCartItems } = useItems();
 

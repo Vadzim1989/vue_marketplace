@@ -1,6 +1,6 @@
 <template>
   <h2 class="text-3xl font-bold flex-wrap mb-8">Favorites</h2>
-  <CardList :items="favoritesItems" />
+  <CardList :items="favoritesItems" is-favorite/>
 </template>
 
 <script setup>
